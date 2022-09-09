@@ -1,0 +1,54 @@
+{
+  "name": "@solec/ic-canister-plugin",
+  "version": "1.0.0",
+  "description": "A Webpack plugin to find your Internet Computer canister Ids and create environment variables for them.",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src/**/*.ts --fix",
+    "prepare": "husky install",
+    "commit": "cz"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "@tsconfig/node16-strictest": "^1.0.3",
+    "@types/node": "^18.7.16",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.3"
+  },
+  "peerDependencies": {
+    "webpack": "^5.0.0"
+  },
+  "engines": {
+    "node": "^14 || ^16"
+  },
+  "homepage": "https://github.com/solec-labs/ic-canister-plugin#readme",
+  "bugs": {
+    "url": "https://github.com/solec-labs/ic-canister-plugin/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solec-labs/ic-canister-plugin.git"
+  },
+  "author": "Solec Labs",
+  "license": "MIT",
+  "keywords": [
+    "dfinity",
+    "internet",
+    "computer",
+    "webpack",
+    "canister",
+    "id",
+    "plugin",
+    "environment"
+  ]
+}
