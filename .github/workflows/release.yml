@@ -1,0 +1,87 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        description: 'Release type (one of): patch, minor, major, prepatch, preminor, premajor, prerelease'
+        required: true
+
+env:
+  NODE_VERSION: '16.x'
+
+jobs:
+  build-and-test:
+    name: Build and test
+    uses: ./.github/workflows/build-and-test.yml
+    with:
+      NODE_VERSION: $NODE_VERSION
+
+  update-version-and-changelog:
+    name: Update version and changelog
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+
+      - name: Git configuration
+        run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
+      - name: Get release tag
+        run: |
+          if $IS_PRERELEASE
+          then
+            echo "PREID=\"next\"" >> $GITHUB_ENV
+            echo "RELEASE_TAG=\"next\"" >> $GITHUB_ENV
+          else
+            echo "PREID=\"\"" >> $GITHUB_ENV
+            echo "RELEASE_TAG=\"latest\"" >> $GITHUB_ENV
+          fi
+
+      - name: Bump version
+        run: echo "NEW_VERSION=$(npm --no-git-tag-version --preid=$PREID version $RELEASE_TYPE)" >> $GITHUB_ENV
+
+      - name: Update changelog
+        run: |
+          npx --no -- conventional-changelog-cli -i CHANGELOG.md -s
+          npx --no -- conventional-changelog-cli -i RELEASE_CHANGELOG.md -s
+
+      - name: Push changes to repository
+        run: |
+          git add "package.json"
+          git add "CHANGELOG.md"
+          git commit -m "chore: release $NEW_VERSION"
+          git tag $NEW_VERSION
+          git push origin && git push --tags
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: .
+
+  Publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    needs: update-version-and-changelog
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+
+      - name: Publish to npm
+        run: npm publish --verbose --access public --tag $RELEASE_TAG
+        env:
+          NODE_AUTH_TOKEN: $NPM_ACCESS_TOKEN
+
+      - name: Create Github release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: 'solec-ic-canister-plugin-$NEW_VERSION.tgz'
+          bodyFile: 'RELEASE_CHANGELOG.md'
