@@ -1,6 +1,6 @@
 {
   "name": "@solec/ic-canister-plugin",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Webpack plugin to find your Internet Computer canister Ids and create environment variables for them.",
   "main": "dist/main.js",
   "scripts": {
