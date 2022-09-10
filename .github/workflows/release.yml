@@ -8,29 +8,33 @@ on:
         required: true
 
 env:
+  IS_PRERELEASE: ${{ startsWith(github.event.inputs.release-type, 'pre') }}
+  RELEASE_TYPE: ${{ github.event.inputs.release-type }}
   NODE_VERSION: '16.x'
-  IS_PRERELEASE: startsWith(github.event.inputs.release-type, 'pre')
 
 jobs:
-  build-and-test:
-    uses: ./.github/workflows/build-and-test.yml
-    with:
-      NODE_VERSION: $NODE_VERSION
-
-  update-version-and-changelog:
-    name: Update version and changelog
+  release:
+    name: Release
     runs-on: ubuntu-latest
-    needs: build-and-test
     steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: build
+      - uses: actions/checkout@v3
 
-      - name: Git configuration
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          registry-url: 'https://registry.npmjs.org'
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Update changelog
         run: |
-          git config --global user.name "${GITHUB_ACTOR}"
-          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          npm run changelog
+          npm run release-notes
 
       - name: Get release tag
         run: |
@@ -46,42 +50,23 @@ jobs:
       - name: Bump version
         run: echo "NEW_VERSION=$(npm --no-git-tag-version --preid=$PREID version $RELEASE_TYPE)" >> $GITHUB_ENV
 
-      - name: Update changelog
-        run: |
-          npx --no -- conventional-changelog-cli -i CHANGELOG.md -s
-          npx --no -- conventional-changelog-cli -i RELEASE_CHANGELOG.md -s
-
       - name: Push changes to repository
-        run: |
-          git add "package.json"
-          git add "CHANGELOG.md"
-          git commit -m "chore: release $NEW_VERSION"
-          git tag $NEW_VERSION
-          git push origin && git push --tags
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          name: build
-          path: .
-
-  Publish:
-    name: Publish
-    runs-on: ubuntu-latest
-    needs: update-version-and-changelog
-    steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: build
+          commit_message: 'chore: release ${{ env.NEW_VERSION }}'
+          commit_options: '--no-verify --signoff'
+          file_pattern: package.json CHANGELOG.md
+          tagging_message: '${{ env.NEW_VERSION }}'
 
       - name: Publish to npm
-        run: npm publish --verbose --access public --tag $RELEASE_TAG
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+        run: npm publish --verbose --access public --tag "${RELEASE_TAG}"
 
       - name: Create Github release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: 'solec-ic-canister-plugin-$NEW_VERSION.tgz'
-          bodyFile: 'RELEASE_CHANGELOG.md'
+          artifacts: 'solec-ic-canister-plugin-${{ env.NEW_VERSION }}.tgz'
+          bodyFile: 'RELEASE_NOTES.md'
+          tag: '${{ env.NEW_VERSION }}'
+          commit: 'main'

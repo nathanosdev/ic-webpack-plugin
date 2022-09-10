@@ -17,7 +17,6 @@ jobs:
       - name: Use Node.js ${{ inputs.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
-          registry-url: 'https://registry.npmjs.org'
           node-version: ${{ inputs.NODE_VERSION }}
           cache: 'npm'
 
