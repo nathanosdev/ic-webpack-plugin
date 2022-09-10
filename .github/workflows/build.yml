@@ -10,7 +10,6 @@ env:
 
 jobs:
   build-and-test:
-    name: Build and test
     uses: ./.github/workflows/build-and-test.yml
     with:
       NODE_VERSION: $NODE_VERSION
