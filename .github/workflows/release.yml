@@ -65,10 +65,13 @@ jobs:
           npm pack
           npm publish --verbose --access public --tag "${RELEASE_TAG}"
 
+      - name: Sanitize version string
+        run: echo "CLEAN_NEW_VERSION=${NEW_VERSION:1}" >> $GITHUB_ENV
+
       - name: Create Github release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: 'solec-ic-canister-plugin-${{ env.NEW_VERSION }}.tgz'
+          artifacts: 'solec-ic-canister-plugin-${{ env.CLEAN_NEW_VERSION }}.tgz'
           bodyFile: 'RELEASE_NOTES.md'
           tag: '${{ env.NEW_VERSION }}'
           commit: 'main'
