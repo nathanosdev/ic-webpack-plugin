@@ -61,7 +61,9 @@ jobs:
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
-        run: npm publish --verbose --access public --tag "${RELEASE_TAG}"
+        run: |
+          npm pack
+          npm publish --verbose --access public --tag "${RELEASE_TAG}"
 
       - name: Create Github release
         uses: ncipollo/release-action@v1
