@@ -31,11 +31,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Update changelog
-        run: |
-          npm run changelog
-          npm run release-notes
-
       - name: Get release tag
         run: |
           if $IS_PRERELEASE
@@ -49,6 +44,11 @@ jobs:
 
       - name: Bump version
         run: echo "NEW_VERSION=$(npm --no-git-tag-version --preid=$PREID version $RELEASE_TYPE)" >> $GITHUB_ENV
+
+      - name: Update changelog
+        run: |
+          npm run changelog
+          npm run release-notes
 
       - name: Push changes to repository
         uses: stefanzweifel/git-auto-commit-action@v4
