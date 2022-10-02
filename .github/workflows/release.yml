@@ -1,17 +1,5 @@
 name: Release
 
-on:
-  workflow_dispatch:
-    inputs:
-      release-type:
-        description: 'Release type (one of): patch, minor, major, prepatch, preminor, premajor, prerelease'
-        required: true
-
-env:
-  IS_PRERELEASE: ${{ startsWith(github.event.inputs.release-type, 'pre') }}
-  RELEASE_TYPE: ${{ github.event.inputs.release-type }}
-  NODE_VERSION: '16.x'
-
 jobs:
   release:
     name: Release
