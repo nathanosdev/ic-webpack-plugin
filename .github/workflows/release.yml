@@ -31,6 +31,7 @@ jobs:
         with:
           changelog_increment_filename: RELEASE_NOTES.md
           commit: false
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print Version
         run: echo "Bumping to version ${{ steps.cz.outputs.version }}"
