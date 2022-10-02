@@ -1,8 +1,8 @@
 declare namespace NodeJS {
-  type EnvironmentVariable = string | undefined;
+  type EnvironmentVariable = string;
 
   interface ProcessEnv {
-    NODE_ENV: EnvironmentVariable;
-    DFX_NETWORK: EnvironmentVariable;
+    NODE_ENV?: EnvironmentVariable;
+    DFX_NETWORK?: EnvironmentVariable;
   }
 }

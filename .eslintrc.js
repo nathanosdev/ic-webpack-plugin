@@ -11,7 +11,7 @@ module.exports = {
     project: ['tsconfig.json'],
     tsconfigRootDir: __dirname,
   },
-  ignorePatterns: ['.eslintrc.js'],
+  ignorePatterns: ['.eslintrc.js', 'jest.config.js'],
   plugins: ['@typescript-eslint'],
   root: true,
   env: {

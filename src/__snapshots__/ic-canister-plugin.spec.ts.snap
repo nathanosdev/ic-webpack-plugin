@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IcCanisterPlugin should create an EnviornmentPlugin with explicitly defined canister definitions 1`] = `
+[
+  {
+    "CANISTER_BACKEND_CANISTER_ID": "renrk-eyaaa-aaaaa-aaada-cai",
+    "CANISTER_FRONTEND_CANISTER_ID": "ryjl3-tyaaa-aaaaa-aaaba-cai",
+  },
+]
+`;
+
+exports[`IcCanisterPlugin should create an EnviornmentPlugin with the local canister definitions 1`] = `
+[
+  {
+    "CANISTER_BACKEND_CANISTER_ID": "rkp4c-7iaaa-aaaaa-aaaca-cai",
+    "CANISTER_FRONTEND_CANISTER_ID": "rrkah-fqaaa-aaaaa-aaaaq-cai",
+  },
+]
+`;
+
+exports[`IcCanisterPlugin should create an EnviornmentPlugin with the mainnet canister definitions 1`] = `
+[
+  {
+    "CANISTER_BACKEND_CANISTER_ID": "rno2w-sqaaa-aaaaa-aaacq-cai",
+    "CANISTER_FRONTEND_CANISTER_ID": "r7inp-6aaaa-aaaaa-aaabq-cai",
+  },
+]
+`;
