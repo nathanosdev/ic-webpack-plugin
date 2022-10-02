@@ -4,7 +4,7 @@
 
 A Webpack plugin to find your Internet Computer canister Ids and create environment variables for them.
 
-[![Build](https://github.com/Solec-Labs/ic-webpack-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/Solec-Labs/ic-webpack-plugin/actions/workflows/build.yml)
+[![Merge](https://github.com/Solec-Labs/ic-webpack-plugin/actions/workflows/merge.yml/badge.svg)](https://github.com/Solec-Labs/ic-webpack-plugin/actions/workflows/merge.yml)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ## Installation
