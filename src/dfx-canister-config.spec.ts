@@ -60,12 +60,12 @@ describe('getCanisterConfig', () => {
       throw new Error('Path does not exist');
     });
 
-    expect(() => getCanisterConfig('ic')).toThrowErrorMatchingSnapshot();
+    expect(() => getCanisterConfig('ic')).toThrowError();
   });
 
   it('should throw if the file buffer cannot be decoded to JSON', () => {
     readFileSyncMock.mockReturnValue(Buffer.from(''));
 
-    expect(() => getCanisterConfig('ic')).toThrowErrorMatchingSnapshot();
+    expect(() => getCanisterConfig('ic')).toThrowError();
   });
 });

@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`getCanisterConfig should throw if it cannot read the canister path 1`] = `"Error loading /home/nathan/programming/crypto/ic-webpack-plugin/canister_ids.json"`;
-
-exports[`getCanisterConfig should throw if the file buffer cannot be decoded to JSON 1`] = `"Error parsing the content of /home/nathan/programming/crypto/ic-webpack-plugin/canister_ids.json into JSON"`;
