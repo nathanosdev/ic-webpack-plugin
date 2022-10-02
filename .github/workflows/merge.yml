@@ -60,6 +60,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Test
+        run: npm run test:cov
+
   check_commit_messages:
     name: Check Commit Messages
     runs-on: ubuntu-latest
