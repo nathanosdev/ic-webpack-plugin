@@ -25,12 +25,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Install tree
-        run: sudo apt-get install -y tree
-
-      - name: Print dist tree
-        run: tree ./dist
-
       - name: Bump Version
         id: cz
         uses: commitizen-tools/commitizen-action@master
@@ -39,50 +33,33 @@ jobs:
           commit: false
           push: false
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Print dist tree
-        run: tree ./dist
-
       - name: Print Version
         run: echo "Bumping to version ${{ steps.cz.outputs.version }}"
-
-      - name: Print dist tree
-        run: tree ./dist
 
       - name: Update package-lock.json
         run: npm i --package-lock-only
 
-      - name: Print dist tree
-        run: tree ./dist
+      - name: Push changes to repository
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'chore: release ${{ steps.cz.outputs.version }}'
+          commit_options: '--no-verify --signoff'
+          file_pattern: cz.json package.json CHANGELOG.md
+          tagging_message: '${{ steps.cz.outputs.version }}'
 
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
         run: |
           npm pack
-        # npm publish --verbose --access public
+          npm publish --verbose --access public
 
-      - name: Print dist tree
-        run: tree ./dist
+      - name: Create Github release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: 'solec-ic-webpack-plugin-${{ steps.cz.outputs.version }}.tgz'
+          bodyFile: 'RELEASE_NOTES.md'
+          tag: '${{ steps.cz.outputs.version }}'
+          commit: 'main'
 
-      # - name: Create Github release
-      #   uses: ncipollo/release-action@v1
-      #   with:
-      #     artifacts: 'solec-ic-webpack-plugin-${{ steps.cz.outputs.version }}.tgz'
-      #     bodyFile: 'RELEASE_NOTES.md'
-      #     tag: '${{ steps.cz.outputs.version }}'
-      #     commit: 'main'
 
-      # - name: Print dist tree
-      #   run: tree ./dist
-
-      # - name: Push changes to repository
-      #   uses: stefanzweifel/git-auto-commit-action@v4
-      #   with:
-      #     commit_message: 'chore: release ${{ steps.cz.outputs.version }}'
-      #     commit_options: '--no-verify --signoff'
-      #     file_pattern: cz.json package.json CHANGELOG.md
-      #     tagging_message: '${{ steps.cz.outputs.version }}'
-
-      # - name: Print dist tree
-      #   run: tree ./dist
