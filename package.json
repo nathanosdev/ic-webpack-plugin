@@ -4,7 +4,7 @@
   "description": "A Webpack plugin to find your Internet Computer canister Ids and create environment variables for them.",
   "main": "dist/main.js",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json --listEmittedFiles",
     "test": "jest",
     "test:cov": "jest --collect-coverage",
     "lint": "eslint src/**/*.ts --fix",
