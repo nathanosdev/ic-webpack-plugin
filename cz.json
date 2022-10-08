@@ -1,8 +1,10 @@
 {
   "commitizen": {
     "name": "cz_conventional_commits",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "tag_format": "$version",
-    "version_files": ["package.json:version"]
+    "version_files": [
+      "package.json:version"
+    ]
   }
 }
