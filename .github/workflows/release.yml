@@ -40,14 +40,6 @@ jobs:
       - name: Update package-lock.json
         run: npm i --package-lock-only
 
-      - name: Push changes to repository
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: 'chore: release ${{ steps.cz.outputs.version }}'
-          commit_options: '--no-verify --signoff'
-          file_pattern: cz.json package.json CHANGELOG.md
-          tagging_message: '${{ steps.cz.outputs.version }}'
-
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
@@ -62,3 +54,11 @@ jobs:
           bodyFile: 'RELEASE_NOTES.md'
           tag: '${{ steps.cz.outputs.version }}'
           commit: 'main'
+
+      - name: Push changes to repository
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'chore: release ${{ steps.cz.outputs.version }}'
+          commit_options: '--no-verify --signoff'
+          file_pattern: cz.json package.json CHANGELOG.md
+          tagging_message: '${{ steps.cz.outputs.version }}'
