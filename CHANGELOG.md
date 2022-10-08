@@ -1,3 +1,9 @@
+## 0.2.1 (2022-10-08)
+
+### Fix
+
+- do not include configure-jest.ts in build output
+
 ## 0.2.0 (2022-10-08)
 
 ### Feat
