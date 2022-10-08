@@ -1,5 +1,9 @@
 ## Unreleased
 
+### Fix
+
+- include all files in npm package
+
 ## 0.2.3 (2022-10-08)
 
 ### Fix
