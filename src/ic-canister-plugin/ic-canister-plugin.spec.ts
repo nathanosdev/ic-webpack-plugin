@@ -1,13 +1,12 @@
 import * as fs from 'fs';
 import * as webpack from 'webpack';
 import { createMock } from 'ts-auto-mock';
+import { On, method } from 'ts-auto-mock/extension';
 import type { Compiler } from 'webpack';
-import type { DfxCanisterConfig } from './dfx-canister-config';
+import type { CanisterConfig, IcWebpackPluginLogger } from '../common';
 import { IcCanisterPlugin } from './ic-canister-plugin';
-import type { IcWebpackPluginLogger } from './ic-webpack-plugin-logger';
 
 jest.mock('fs');
-type ReadFileSync = typeof fs['readFileSync'];
 
 jest.mock('webpack', () => {
   const realWebpack = jest.requireActual<typeof webpack>('webpack');
@@ -23,13 +22,10 @@ describe('IcCanisterPlugin', () => {
 
   let loggerMock: IcWebpackPluginLogger;
   let compilerMock: Compiler;
-  let readFileSyncMock: jest.SpyInstance<
-    ReturnType<ReadFileSync>,
-    Parameters<ReadFileSync>
-  >;
+  let readFileSyncMock: jest.SpyInstance;
   let environmentPluginMock: jest.SpyInstance;
 
-  const canisterConfig: DfxCanisterConfig = {
+  const canisterConfig: CanisterConfig = {
     canister_frontend: {
       local: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
       testnet: 'ryjl3-tyaaa-aaaaa-aaaba-cai',
@@ -46,10 +42,15 @@ describe('IcCanisterPlugin', () => {
 
   beforeEach(() => {
     readFileSyncMock = jest.spyOn(fs, 'readFileSync');
+
     compilerMock = createMock<Compiler>();
     loggerMock = createMock<IcWebpackPluginLogger>({
       log: jest.fn(),
     });
+    On(compilerMock)
+      .get(method('getInfrastructureLogger'))
+      .mockReturnValue(loggerMock);
+
     environmentPluginMock = jest.spyOn(webpack, 'EnvironmentPlugin');
 
     plugin = new IcCanisterPlugin();
@@ -65,7 +66,7 @@ describe('IcCanisterPlugin', () => {
   it('should create an EnviornmentPlugin with the local canister definitions', () => {
     readFileSyncMock.mockReturnValue(canisterConfigBuffer);
 
-    plugin.apply(compilerMock, loggerMock);
+    plugin.apply(compilerMock);
 
     expect(environmentPluginMock).toHaveBeenCalledTimes(1);
     expect(environmentPluginMock.mock.calls[0]).toMatchSnapshot();
@@ -75,7 +76,7 @@ describe('IcCanisterPlugin', () => {
     readFileSyncMock.mockReturnValue(canisterConfigBuffer);
     process.env.NODE_ENV = 'production';
 
-    plugin.apply(compilerMock, loggerMock);
+    plugin.apply(compilerMock);
 
     expect(environmentPluginMock).toHaveBeenCalledTimes(1);
     expect(environmentPluginMock.mock.calls[0]).toMatchSnapshot();
@@ -85,7 +86,7 @@ describe('IcCanisterPlugin', () => {
     readFileSyncMock.mockReturnValue(canisterConfigBuffer);
     process.env.DFX_NETWORK = 'testnet';
 
-    plugin.apply(compilerMock, loggerMock);
+    plugin.apply(compilerMock);
 
     expect(environmentPluginMock).toHaveBeenCalledTimes(1);
     expect(environmentPluginMock.mock.calls[0]).toMatchSnapshot();

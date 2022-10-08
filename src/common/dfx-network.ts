@@ -1,8 +1,8 @@
 import type { IcWebpackPluginLogger } from './ic-webpack-plugin-logger';
 
-export type NetworkName = string;
+export type DfxNetwork = string;
 
-export function getDfxNetwork(logger: IcWebpackPluginLogger): NetworkName {
+export function getDfxNetwork(logger: IcWebpackPluginLogger): DfxNetwork {
   const dfxNetwork = process.env.DFX_NETWORK ?? null;
   const nodeEnv = process.env.NODE_ENV ?? null;
 

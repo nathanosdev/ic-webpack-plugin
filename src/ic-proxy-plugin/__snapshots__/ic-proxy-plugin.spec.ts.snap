@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IcProxyPlugin should merge dev server config options 1`] = `
+{
+  "proxy": {
+    "/api": {
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": "/api",
+      },
+      "target": "http://https://fake-network.com",
+    },
+  },
+  "static": [
+    {
+      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/assets",
+    },
+    {
+      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/css",
+    },
+  ],
+}
+`;
+
+exports[`IcProxyPlugin should merge with existing static assets array 1`] = `
+{
+  "proxy": {
+    "/api": {
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": "/api",
+      },
+      "target": "http://https://fake-network.com",
+    },
+  },
+  "static": [
+    "other-src/assets",
+    {
+      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/assets",
+    },
+    {
+      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/css",
+    },
+  ],
+}
+`;
+
+exports[`IcProxyPlugin should merge with existing static assets object 1`] = `
+{
+  "proxy": {
+    "/api": {
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": "/api",
+      },
+      "target": "http://https://fake-network.com",
+    },
+  },
+  "static": [
+    {
+      "directory": "other-src/assets",
+    },
+    {
+      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/assets",
+    },
+    {
+      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/css",
+    },
+  ],
+}
+`;
+
+exports[`IcProxyPlugin should merge with existing static assets string 1`] = `
+{
+  "proxy": {
+    "/api": {
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": "/api",
+      },
+      "target": "http://https://fake-network.com",
+    },
+  },
+  "static": [
+    "other-src/assets",
+    {
+      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/assets",
+    },
+    {
+      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/css",
+    },
+  ],
+}
+`;
+
+exports[`IcProxyPlugin should not add static assets if static assets is disabled 1`] = `
+{
+  "proxy": {
+    "/api": {
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": "/api",
+      },
+      "target": "http://https://fake-network.com",
+    },
+  },
+  "static": false,
+}
+`;
+
+exports[`IcProxyPlugin should not add static assets if there is no output path 1`] = `
+{
+  "proxy": {
+    "/api": {
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": "/api",
+      },
+      "target": "http://https://fake-network.com",
+    },
+  },
+  "static": [],
+}
+`;
+
+exports[`IcProxyPlugin should not do anything if there is no network config 1`] = `undefined`;

@@ -12,7 +12,7 @@ module.exports = {
     ],
   },
   rootDir: 'src',
-  collectCoverageFrom: ['**/*.ts', '!main.ts', '!typings.d.ts'],
+  collectCoverageFrom: ['**/*.ts', '!main.ts', '!typings.d.ts', '!**/index.ts'],
   coverageDirectory: '<rootDir>/../coverage',
   reporters: [
     'default',

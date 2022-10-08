@@ -1,17 +1,13 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { DfxCanisterConfig, getCanisterConfig } from './dfx-canister-config';
+import { CanisterConfig, getCanisterConfig } from './dfx-canister-config';
 
 jest.mock('fs');
-type ReadFileSync = typeof fs['readFileSync'];
 
 describe('getCanisterConfig', () => {
-  let readFileSyncMock: jest.SpyInstance<
-    ReturnType<ReadFileSync>,
-    Parameters<ReadFileSync>
-  >;
+  let readFileSyncMock: jest.SpyInstance;
 
-  const canisterConfig: DfxCanisterConfig = {
+  const canisterConfig: CanisterConfig = {
     canister_frontend: {
       local: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
       testnet: 'ryjl3-tyaaa-aaaaa-aaaba-cai',

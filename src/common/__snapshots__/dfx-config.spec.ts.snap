@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getDfxAssetCanisterConfig should throw if there are no asset canisters 1`] = `"Could not find an asset canister in dfx.json"`;
+
+exports[`getDfxAssetCanisterConfig should throw if there are no canisters at all 1`] = `"Could not find an asset canister in dfx.json"`;
+
+exports[`getDfxAssetCanisterConfig should throw if there is more than one asset canister 1`] = `"More than one asset canister found, only one is supported"`;
+
+exports[`getDfxNetworkAddress should throw if there is no provider for a custom network config 1`] = `"Could not find provider for custom network: local"`;
