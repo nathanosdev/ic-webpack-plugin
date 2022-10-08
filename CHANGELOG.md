@@ -1,3 +1,9 @@
+## Unreleased
+
+### Fix
+
+- list emitted files and dont include tsconfig.build.tsbuildinfo in output
+
 ## 0.2.1 (2022-10-08)
 
 ### Fix
