@@ -13,10 +13,13 @@ exports[`IcProxyPlugin should merge dev server config options 1`] = `
   },
   "static": [
     {
-      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/assets",
+      "directory": "src/hello_ic_frontend/assets",
     },
     {
-      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/css",
+      "directory": "src/hello_ic_frontend/css",
+    },
+    {
+      "directory": "dist/hello_ic_frontend/",
     },
   ],
 }
@@ -36,10 +39,13 @@ exports[`IcProxyPlugin should merge with existing static assets array 1`] = `
   "static": [
     "other-src/assets",
     {
-      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/assets",
+      "directory": "src/hello_ic_frontend/assets",
     },
     {
-      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/css",
+      "directory": "src/hello_ic_frontend/css",
+    },
+    {
+      "directory": "dist/hello_ic_frontend/",
     },
   ],
 }
@@ -61,10 +67,13 @@ exports[`IcProxyPlugin should merge with existing static assets object 1`] = `
       "directory": "other-src/assets",
     },
     {
-      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/assets",
+      "directory": "src/hello_ic_frontend/assets",
     },
     {
-      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/css",
+      "directory": "src/hello_ic_frontend/css",
+    },
+    {
+      "directory": "dist/hello_ic_frontend/",
     },
   ],
 }
@@ -84,10 +93,13 @@ exports[`IcProxyPlugin should merge with existing static assets string 1`] = `
   "static": [
     "other-src/assets",
     {
-      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/assets",
+      "directory": "src/hello_ic_frontend/assets",
     },
     {
-      "directory": "/home/nathan/programming/crypto/ic-webpack-plugin/src/hello_ic_frontend/css",
+      "directory": "src/hello_ic_frontend/css",
+    },
+    {
+      "directory": "dist/hello_ic_frontend/",
     },
   ],
 }

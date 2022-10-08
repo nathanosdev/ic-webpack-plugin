@@ -6,6 +6,7 @@ import { IcProxyPlugin } from './ic-proxy-plugin';
 import type { DfxConfig } from '../common';
 
 jest.mock('fs');
+jest.mock('path');
 
 describe('IcProxyPlugin', () => {
   let plugin: IcProxyPlugin;
@@ -16,6 +17,7 @@ describe('IcProxyPlugin', () => {
 
   beforeEach(() => {
     readFileSpy = jest.spyOn(fs, 'readFileSync');
+    jest.spyOn(path, 'resolve').mockImplementation(path => path);
 
     tapMock = jest.fn().mockImplementation((_, callback: () => void) => {
       callback();
