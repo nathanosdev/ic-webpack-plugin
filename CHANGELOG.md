@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 0.2.3 (2022-10-08)
+
 ### Fix
 
 - push changes to repository after publishing to npm and github
