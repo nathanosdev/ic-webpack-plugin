@@ -33,6 +33,7 @@ jobs:
           commit: false
           push: false
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Print Version
         run: echo "Bumping to version ${{ steps.cz.outputs.version }}"
 
@@ -44,7 +45,7 @@ jobs:
         with:
           commit_message: 'chore: release ${{ steps.cz.outputs.version }}'
           commit_options: '--no-verify --signoff'
-          file_pattern: cz.json package.json CHANGELOG.md
+          file_pattern: cz.json package.json package-lock.json CHANGELOG.md
           tagging_message: '${{ steps.cz.outputs.version }}'
 
       - name: Publish to npm

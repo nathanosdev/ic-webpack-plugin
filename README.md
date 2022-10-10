@@ -1,4 +1,4 @@
-# IC Canister Plugin
+# IC Webpack Plugin
 
 ## Overview
 
@@ -9,6 +9,12 @@ A Webpack plugin to find your Internet Computer canister Ids and create environm
 [![Dependencies](https://img.shields.io/librariesio/release/npm/@solec/ic-webpack-plugin)](https://www.npmjs.com/package/@solec/ic-webpack-plugin)
 [![Latest Version](https://img.shields.io/npm/v/@solec/ic-webpack-plugin)](https://www.npmjs.com/package/@solec/ic-webpack-plugin)
 [![License](https://img.shields.io/github/license/Solec-Labs/ic-webpack-plugin)](./LICENSE)
+
+## What It Does
+
+- Loads canister IDs from `canister_ids.json` and provides environment variables for `agent-js`.
+- Sets up a proxy for an IC network - local, production or an alternative network that you configure.
+- Detects your static assets from `dfx.json` and serves them through Webpack Dev Server.
 
 ## Installation
 
@@ -32,10 +38,35 @@ module.exports = {
 };
 ```
 
-## Using an alternative network
+## Building For Production
 
-The plugin will automatically load the canister IDs from `.dfx/local/canister_ids.json`.
-If you need to specify a different network, you can set the `DFX_NETWORK` variable.
+When `--network` is set to `ic` through `dfx`, or `NODE_ENV` is to `production` then canister IDs will be read from a `canister_ids.json` file in the root of your directory.
+That file should be structured like this:
+
+```json
+{
+  "${canister_name}": {
+    "ic": "${canister-id}"
+  },
+  "${canister_name}": {
+    "ic": "${canister-id}"
+  }
+}
+```
+
+Then you can build for the `ic` network using `dfx`:
+
+```shell
+$ dfx build --network ic
+```
+
+Or deploy to the `ic` network using `dfx`:
+
+```shell
+$ dfx deploy --network ic
+```
+
+## Building For An Alternative Network
 
 In your `dfx.json` file, add another network, for example:
 
@@ -57,29 +88,19 @@ Create your canisters on the network:
 $ dfx canister --network testnet create --all
 ```
 
-Then deploy your canisters:
+Then you can build for your alternative network using `dfx`:
+
+```shell
+$ dfx build --network testnet
+```
+
+Or deploy to your alternative network using `dfx`:
 
 ```shell
 $ dfx deploy --network testnet
 ```
 
 The plugin will automatically pick up the network that you've selected through `dfx`.
-
-## Production
-
-When `--network` is set to `ic` through `dfx`, or `NODE_ENV` is to `production` then canister IDs will be read from a `canister_ids.json` file in the root of your directory.
-That file should be structured like this:
-
-```json
-{
-  "${canister_name}": {
-    "ic": "${canister-id}"
-  },
-  "${canister_name}": {
-    "ic": "${canister-id}"
-  }
-}
-```
 
 ## Contributing
 

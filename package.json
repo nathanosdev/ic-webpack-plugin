@@ -55,6 +55,7 @@
     "webpack",
     "canister",
     "id",
+    "proxy",
     "plugin",
     "environment"
   ]
